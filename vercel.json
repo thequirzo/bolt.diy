@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "framework": "other",
+  "buildCommand": "pnpm run build",
+  "outputDirectory": "build/client",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api/index"
+    }
+  ]
+}

@@ -6,6 +6,8 @@ import { defineConfig, type ViteDevServer } from 'vite';
 import { optimizeCssModules } from 'vite-plugin-optimize-css-modules';
 import { browserPolyfills } from './scripts/vite/browser-polyfills.ts';
 
+const isVercel = process.env.VERCEL === '1';
+
 /*
  * Prevent miniflare from making an external network request to workers.cloudflare.com
  * for Request.cf during local dev, which causes 3-second TimeoutError warnings.
@@ -171,7 +173,7 @@ export default defineConfig((config) => {
        * package is CommonJS and exposes no named `Buffer` export.
        */
       browserPolyfills(),
-      config.mode !== 'test' && cloudflare({ viteEnvironment: { name: 'ssr' } }),
+      config.mode !== 'test' && !isVercel && cloudflare({ viteEnvironment: { name: 'ssr' } }),
       config.mode !== 'test' && reactRouter(),
       UnoCSS(),
       chrome129IssuePlugin(),
